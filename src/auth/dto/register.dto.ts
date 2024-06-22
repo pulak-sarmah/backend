@@ -1,45 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Matches,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  ValidationArguments,
-  registerDecorator,
-  ValidationOptions,
-} from 'class-validator';
-
-@ValidatorConstraint({ name: 'isMatch', async: false })
-export class IsMatchConstraint implements ValidatorConstraintInterface {
-  validate(confirmPassword: string, args: ValidationArguments) {
-    const [relatedPropertyName] = args.constraints;
-    const relatedValue = (args.object as any)[relatedPropertyName];
-    return confirmPassword === relatedValue;
-  }
-
-  defaultMessage(args: ValidationArguments) {
-    const [relatedPropertyName] = args.constraints;
-    return `${relatedPropertyName} and confirm password do not match`;
-  }
-}
-
-export function IsMatch(
-  property: string,
-  validationOptions?: ValidationOptions,
-) {
-  return function (object: any, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [property],
-      validator: IsMatchConstraint,
-    });
-  };
-}
-
+import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
 @InputType()
 export class RegisterDto {
   @Field()
@@ -64,6 +24,5 @@ export class RegisterDto {
   @Field()
   @IsNotEmpty({ message: 'Confirm password must match the password' })
   @IsString({ message: 'Confirm password must be a string' })
-  @IsMatch('password', { message: 'Passwords do not match' })
   confirmPassword: string;
 }
