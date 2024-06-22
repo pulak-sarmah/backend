@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: my_postgres_container
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=pulak
+      - POSTGRES_PASSWORD=docker1238
+      - POSTGRES_DB=chatapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: my_redis_container
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
