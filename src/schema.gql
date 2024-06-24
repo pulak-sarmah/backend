@@ -46,8 +46,8 @@ type User {
   avatarUrl: String
   createdAt: DateTime
   email: String!
-  fullname: String!
-  id: Float!
+  fullName: String!
+  id: Int!
   password: String
   updatedAt: DateTime
 }

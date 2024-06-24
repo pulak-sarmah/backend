@@ -21,6 +21,7 @@ export class UserService {
     return await this.databaseService.user.update({
       where: { id: userId },
       data: { fullName },
+      include: { chatRooms: true },
     });
   }
 }
